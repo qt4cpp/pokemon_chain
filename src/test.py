@@ -9,6 +9,7 @@ path = './data/pokedata'
 d = PokemonDict()
 print(d.search('ア')[0])
 print(d.search('ゲ')[0])
+print(d.search_end_with('ン')[1])
 print(d.search_no(1))
 # for p in d.data:
 #     print(p)

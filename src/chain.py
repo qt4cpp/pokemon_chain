@@ -28,4 +28,3 @@ def lucky_feeling(first_pokemon, last_pokemon):
     for i in chain_hist:
         print(i)
 
-
