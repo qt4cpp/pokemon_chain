@@ -8,6 +8,7 @@ class PokemonDict():
 
     def __init__(self):
         self.data_begin_with = {}
+        self.data_end_with = {}
         with open(path) as f:
             for line in f:
                 # matched = re.match(r"([\d\*]{3})\s+(\w+)", line)
@@ -20,14 +21,20 @@ class PokemonDict():
     def add(self, pokemon):
         """pokemon class のインスタンスを database に追加する"""
 
-        first_letter = pokemon.first_letter()
-        if first_letter in self.data_begin_with:
-            poke_list = self.data_begin_with[first_letter]
-            poke_list.append(pokemon)
-            self.data_begin_with[first_letter] = poke_list
-        else:
-            new_list = [pokemon]
-            self.data_begin_with[first_letter] = new_list
+        def add_impl(c, data, p):
+            if c in data:
+                l = data[c]
+                l.append(p)
+                return l
+            else:
+                n = [p]
+                return n
+
+        c = pokemon.first_letter()
+        self.data_begin_with[c] = add_impl(c, self.data_begin_with, pokemon)
+
+        c = pokemon.last_letter()
+        self.data_end_with[c] = add_impl(c, self.data_end_with, pokemon)
 
     def search(self, first_letter):
         """ポケモンを最初の名前から"""
@@ -45,6 +52,10 @@ class PokemonDict():
     def search_begin_with(self, first_letter):
         """first_letter で始まるポケモンのlist を返す"""
         return self.data_begin_with[first_letter]
+
+    def search_end_with(self, last_letter):
+        """last_letter で終わるポケモンの list を返す"""
+        return self.data_end_with[last_letter]
 
     def search_name(self, name):
         """name が名前のポケモンを返す。
