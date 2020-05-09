@@ -1,13 +1,17 @@
 from pokemon_dict import PokemonDict
 from random import randint
+from anytree import Node, RenderTree
 
 
 dictionary = PokemonDict()
-chain_hist = []
 
 
 def chain(first_pokemon, last_pokemon):
-    chain_hist.append(first_pokemon)
+    lucky_feeling(first_pokemon, last_pokemon)
+
+
+def lucky_feeling(first_pokemon, last_pokemon):
+    chain_hist = [first_pokemon]
     candidate_list = dictionary.search(first_pokemon.last_letter())
     while True:
         if not candidate_list:
@@ -23,3 +27,5 @@ def chain(first_pokemon, last_pokemon):
 
     for i in chain_hist:
         print(i)
+
+
